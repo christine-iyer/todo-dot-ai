@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link, Outlet } from '@tanstack/react-router';
+import { useNavigate, Outlet } from '@tanstack/react-router';
 
 const App: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div style={{ fontFamily: 'Arial, sans-serif' }}>
       <nav
@@ -11,17 +13,38 @@ const App: React.FC = () => {
           padding: '1rem',
           borderBottom: '1px solid #ddd',
         }}>
-        <Link to="/" style={{ textDecoration: 'none', fontWeight: 'bold' }}>
+        <button
+          onClick={() => navigate({ to: '/' })}
+          style={{ 
+            textDecoration: 'none', 
+            fontWeight: 'bold',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '1rem'
+          }}
+        >
           Todo List
-        </Link>
-        <Link to="/ai-tools" style={{ textDecoration: 'none', fontWeight: 'bold' }}>
+        </button>
+        <button
+          onClick={() => navigate({ to: '..' })}
+          style={{ 
+            textDecoration: 'none', 
+            fontWeight: 'bold',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '1rem'
+          }}
+        >
           AI Tools
-        </Link>
+        </button>
       </nav>
       <main style={{ padding: '2rem' }}>
-        <Outlet /> {/* Renders child components */}
+        <Outlet />
       </main>
-    </div>);
+    </div>
+  );
 };
 
 export default App;

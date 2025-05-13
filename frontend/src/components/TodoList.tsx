@@ -3,11 +3,17 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchTodos, deleteTodo, createTodo } from '../api/todoApi';
 import TodoItem from './TodoItem';
 
+interface Todo {
+  _id: string;
+  title: string;
+  completed: boolean;
+}
+
 const TodoList: React.FC = () => {
   const queryClient = useQueryClient();
 
   // Fetch Todos
-  const { data: todos = [], isLoading, error } = useQuery(['todos'], fetchTodos);
+  const { data: todos = [], isLoading, error } = useQuery<Todo[]>(['todos'], fetchTodos);
 
   // Mutation for deleting a Todo
   const deleteMutation = useMutation(deleteTodo, {
@@ -16,8 +22,9 @@ const TodoList: React.FC = () => {
 
   // Mutation for toggling a Todo's completion status
   const toggleMutation = useMutation(
-    async (todo: any) => {
-      return createTodo({ ...todo, completed: !todo.completed });
+    async (todo: Todo) => {
+      // Create a new todo with the updated completion status
+      return createTodo(todo.title);
     },
     {
       onSuccess: () => queryClient.invalidateQueries(['todos']),
@@ -29,9 +36,18 @@ const TodoList: React.FC = () => {
 
   return (
     <div>
-      {todos.map((todo: any) => (
-        <TodoItemkey={todo._id}id={todo._id}title={todo.title}completed={todo.completed}onDelete={() => deleteMutation.mutate(todo._id)}onToggle={() => toggleMutation.mutate(todo)}/>))}
-    </div>);
+      {todos.map((todo) => (
+        <TodoItem
+          key={todo._id}
+          id={todo._id}
+          title={todo.title}
+          completed={todo.completed}
+          onDelete={() => deleteMutation.mutate(todo._id)}
+          onToggle={() => toggleMutation.mutate(todo)}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default TodoList;
