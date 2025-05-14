@@ -8,29 +8,25 @@ const rootRoute = createRootRoute({
   component: App,
 });
 
-// Define the index route
-const indexRoute = createRoute({
+// Define child routes
+const todoRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
   component: TodoPage,
 });
 
-// Define the AI tools route
 const aiToolsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/ai-tools',
   component: AiToolsPage,
 });
 
-// Build the route tree using addChildren
-const routeTree = rootRoute.addChildren([
-  indexRoute,
-  aiToolsRoute,
-]);
+// Attach child routes to the root route
+rootRoute.addChildren([todoRoute, aiToolsRoute]);
 
-// Create the router using the constructed route tree
+// Create the router using the root route
 const router = createRouter({
-  routeTree: routeTree, // Use the tree built with addChildren
+  routeTree: rootRoute, // Pass the root route directly
   defaultPreload: 'intent',
 });
 

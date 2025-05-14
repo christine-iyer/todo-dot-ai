@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, Outlet } from '@tanstack/react-router';
+import { todoRoute, aiToolsRoute } from './routes'; // Import route objects
 
 const App: React.FC = () => {
   const navigate = useNavigate();
@@ -13,32 +14,8 @@ const App: React.FC = () => {
           padding: '1rem',
           borderBottom: '1px solid #ddd',
         }}>
-        <button
-          onClick={() => navigate({ to: '/' })}
-          style={{ 
-            textDecoration: 'none', 
-            fontWeight: 'bold',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: '1rem'
-          }}
-        >
-          Todo List
-        </button>
-        <button
-          onClick={() => navigate({ to: '/ai-tools' })}
-          style={{ 
-            textDecoration: 'none', 
-            fontWeight: 'bold',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: '1rem'
-          }}
-        >
-          AI Tools
-        </button>
+        <button onClick={() => navigate({ to: todoRoute.id })}>Todo List</button>
+        <button onClick={() => navigate({ to: aiToolsRoute.id })}>AI Tools</button>
       </nav>
       <main style={{ padding: '2rem' }}>
         <Outlet />
