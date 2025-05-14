@@ -18,17 +18,23 @@ const indexRoute = createRoute({
 // Define the AI tools route
 const aiToolsRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '..',
+  path: '/ai-tools',
   component: AiToolsPage,
 });
 
-// Create the router
+// Build the route tree using addChildren
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  aiToolsRoute,
+]);
+
+// Create the router using the constructed route tree
 const router = createRouter({
-  routeTree: rootRoute,
+  routeTree: routeTree, // Use the tree built with addChildren
   defaultPreload: 'intent',
 });
 
-// Register the router
+// Register the router for type safety
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;

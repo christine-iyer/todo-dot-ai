@@ -27,7 +27,7 @@ const App: React.FC = () => {
           Todo List
         </button>
         <button
-          onClick={() => navigate({ to: '..' })}
+          onClick={() => navigate({ to: '/ai-tools' })}
           style={{ 
             textDecoration: 'none', 
             fontWeight: 'bold',
